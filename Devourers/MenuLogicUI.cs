@@ -18,18 +18,47 @@ namespace Devourers
         private UniformGrid _playerOneButtons;
         private UniformGrid _playerTwoButtons;
 
-        public MenuLogicUI(Label playerOneLabel, Label playerTwoLabel, UniformGrid playerOneButtons, UniformGrid playerTwoButtons)
+        private Brush _playerOneBrush;
+        private Brush _playerTwoBrush;
+
+        private Brush _playerOneTempBrush;
+        private Brush _playerTwoTempBrush;
+
+        private StackPanel _labelStackPanel;
+        private StackPanel _buttonsStackPanel;
+
+        public MenuLogicUI(Label playerOneLabel, Label playerTwoLabel,
+                           UniformGrid playerOneButtons, UniformGrid playerTwoButtons,
+                           StackPanel labelStackPanel, StackPanel buttonsStackPanel)
         {
             _playerOneLabel = playerOneLabel;
             _playerTwoLabel = playerTwoLabel;
             _playerOneButtons = playerOneButtons;
             _playerTwoButtons = playerTwoButtons;
+            _labelStackPanel = labelStackPanel;
+            _buttonsStackPanel = buttonsStackPanel;
         }
+
+        /* Player one buttons */
 
         public void PlayerOneButton_Clicked(object sender, RoutedEventArgs e)
         {
             if (sender is Button clickedButton)
             {
+                _playerOneTempBrush = clickedButton.Background;
+
+                if (IsTheSameColor(_playerOneTempBrush, _playerTwoBrush))
+                {
+                    return;
+                }
+
+                _playerOneBrush = _playerOneTempBrush;
+
+                if (_playerOneBrush != null && _playerTwoBrush != null)
+                {
+                    DisplaySection();
+                }
+
                 foreach (var child in _playerOneButtons.Children)
                 {
                     if (child is Button button)
@@ -40,8 +69,8 @@ namespace Devourers
                     }
                 }
                 // Set the border for clicked button
-                clickedButton.BorderThickness = new Thickness(10);
-                clickedButton.BorderBrush = Brushes.Black;
+                clickedButton.BorderThickness = new Thickness(15);
+                clickedButton.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#222831"));
             }
         }
 
@@ -55,7 +84,54 @@ namespace Devourers
 
         public void PlayerOneButton_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            _playerOneLabel.Foreground = new SolidColorBrush(Colors.White);
+            if (_playerOneBrush == null)
+            {
+                _playerOneLabel.Foreground = new SolidColorBrush(Colors.White);
+                return;
+            }
+
+            if (IsTheSameColor(_playerOneBrush, _playerTwoBrush))
+            {
+                _playerOneLabel.Foreground = _playerOneBrush;
+                return;
+            }
+
+            _playerOneLabel.Foreground = _playerOneBrush;
+        }
+
+        /* Player two buttons */
+
+        public void PlayerTwoButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button clickedButton)
+            {
+                _playerTwoTempBrush = clickedButton.Background;
+
+                if (IsTheSameColor(_playerTwoTempBrush, _playerOneBrush))
+                {
+                    return;
+                }
+
+                _playerTwoBrush = _playerTwoTempBrush;
+
+                if (_playerOneBrush != null && _playerTwoBrush != null)
+                {
+                    DisplaySection();
+                } 
+
+                foreach (var child in _playerTwoButtons.Children)
+                {
+                    if (child is Button button)
+                    {
+                        // Reset the border for all buttons
+                        button.BorderThickness = new Thickness(0);
+                        button.BorderBrush = null;
+                    }
+                }
+                // Set the border for clicked button
+                clickedButton.BorderThickness = new Thickness(15);
+                clickedButton.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#222831"));
+            }
         }
 
         public void PlayerTwoButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -68,7 +144,32 @@ namespace Devourers
 
         public void PlayerTwoButton_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            _playerTwoLabel.Foreground = new SolidColorBrush(Colors.White);
+            if (_playerTwoBrush == null)
+            {
+                _playerTwoLabel.Foreground = new SolidColorBrush(Colors.White);
+                return;
+            }
+
+            if (IsTheSameColor(_playerOneBrush, _playerTwoBrush))
+            {
+                _playerTwoLabel.Foreground = _playerTwoBrush;
+                return;
+            }
+
+            _playerTwoLabel.Foreground = _playerTwoBrush;
+        }
+
+        private bool IsTheSameColor(Brush first, Brush second)
+        {
+            return (first is SolidColorBrush brush1 &&
+                    second is SolidColorBrush brush2 &&
+                    brush1.Color == brush2.Color);
+        }
+
+        private void DisplaySection()
+        {
+            _labelStackPanel.Visibility = Visibility.Visible;
+            _buttonsStackPanel.Visibility = Visibility.Visible;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Devourers
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MenuLogicUI _menuLogic;
+        private MenuLogicUI? _menuLogic;
 
         public MainWindow()
         {
@@ -26,7 +26,9 @@ namespace Devourers
 
         private void InitializeMenuLogicUI()
         {
-            _menuLogic = new MenuLogicUI(PlayerOneLabel, PlayerTwoLabel, PlayerOneButtonContainer, PlayerTwoButtonContainer);
+            _menuLogic = new MenuLogicUI(PlayerOneLabel, PlayerTwoLabel,
+                                         PlayerOneButtonContainer, PlayerTwoButtonContainer,
+                                         SelectBoardSizeSection, BoardSizeButtonsSection);
 
             foreach (UIElement element in PlayerOneButtonContainer.Children)
             {
@@ -34,7 +36,7 @@ namespace Devourers
                 {
                     button.Click += _menuLogic.PlayerOneButton_Clicked;
                     button.MouseEnter += _menuLogic.PlayerOneButton_MouseEnter;
-                    //button.MouseLeave += _menuLogic.PlayerOneButton_MouseLeave;
+                    button.MouseLeave += _menuLogic.PlayerOneButton_MouseLeave;
                 }
             }
 
@@ -42,8 +44,9 @@ namespace Devourers
             {
                 if (element is Button button)
                 {
+                    button.Click += _menuLogic.PlayerTwoButton_Clicked;
                     button.MouseEnter += _menuLogic.PlayerTwoButton_MouseEnter;
-                    //button.MouseLeave += _menuLogic.PlayerTwoButton_MouseLeave;
+                    button.MouseLeave += _menuLogic.PlayerTwoButton_MouseLeave;
                 }
             }
         }

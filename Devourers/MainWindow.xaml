@@ -93,10 +93,10 @@
                 </UniformGrid>
             </StackPanel>
             <!-- Board size buttons -->
-            <StackPanel Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
+            <StackPanel Name="SelectBoardSizeSection" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" Visibility="Collapsed">
                 <Label Content="Select map size:" Foreground="White" FontSize="30"/>
             </StackPanel>
-            <StackPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="20,0,20,40">
+            <StackPanel Name="BoardSizeButtonsSection" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="20,0,20,40" Visibility="Collapsed">
                 <Button Margin="0,0,0,0" Width="250" Height="90" BorderThickness="0" Style="{StaticResource NoHoverButtonStyle}">
                     <Button.Content>
                         <Image Source="pack://application:,,,/Assets/Img/mapSize3x3.png" Stretch="UniformToFill"/>
