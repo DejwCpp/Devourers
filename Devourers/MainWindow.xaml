@@ -50,6 +50,8 @@
             <Setter Property="Foreground" Value="White" />
         </Style>
     </Window.Resources>
+    
+    
     <Grid Name="MainGrid">
         <!-- Menu screen -->
         <Grid Name="MenuScreen" Visibility="Visible">
@@ -97,23 +99,35 @@
                 <Label Content="Select map size:" Foreground="White" FontSize="30"/>
             </StackPanel>
             <StackPanel Name="BoardSizeButtonsSection" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" Margin="20,0,20,40" Visibility="Collapsed">
-                <Button Margin="0,0,0,0" Width="250" Height="90" BorderThickness="0" Style="{StaticResource NoHoverButtonStyle}">
+                <Button Click="GenerateBoardButtonClicked" Tag="3" Cursor="Hand" Margin="0,0,0,0" Width="250" Height="90" BorderThickness="0" Style="{StaticResource NoHoverButtonStyle}">
                     <Button.Content>
                         <Image Source="pack://application:,,,/Assets/Img/mapSize3x3.png" Stretch="UniformToFill"/>
                     </Button.Content>
                 </Button>
-                <Button Margin="0,0,0,0" Width="250" Height="90" BorderThickness="0" Style="{StaticResource NoHoverButtonStyle}">
+                <Button Click="GenerateBoardButtonClicked" Tag="4" Cursor="Hand" Margin="0,0,0,0" Width="250" Height="90" BorderThickness="0" Style="{StaticResource NoHoverButtonStyle}">
                     <Button.Content>
                         <Image Source="pack://application:,,,/Assets/Img/mapSize4x4.png" Stretch="UniformToFill"/>
                     </Button.Content>
                 </Button>
-                <Button Margin="0,0,0,0" Width="250" Height="90" BorderThickness="0" Style="{StaticResource NoHoverButtonStyle}">
+                <Button Click="GenerateBoardButtonClicked" Tag="5" Cursor="Hand" Margin="0,0,0,0" Width="250" Height="90" BorderThickness="0" Style="{StaticResource NoHoverButtonStyle}">
                     <Button.Content>
                         <Image Source="pack://application:,,,/Assets/Img/mapSize5x5.png" Stretch="UniformToFill"/>
                     </Button.Content>
                 </Button>
             </StackPanel>
         </Grid>
-        
+        <!-- Game screen -->
+        <Grid Name="GameScreen" Visibility="Collapsed" Background="Pink">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+        </Grid>
     </Grid>
 </Window>

@@ -159,6 +159,16 @@ namespace Devourers
             _playerTwoLabel.Foreground = _playerTwoBrush;
         }
 
+        public Brush GetPlayerOneBrush()
+        {
+            return _playerOneBrush;
+        }
+
+        public Brush GetPlayerTwoBrush()
+        {
+            return _playerTwoBrush;
+        }
+
         private bool IsTheSameColor(Brush first, Brush second)
         {
             return (first is SolidColorBrush brush1 &&

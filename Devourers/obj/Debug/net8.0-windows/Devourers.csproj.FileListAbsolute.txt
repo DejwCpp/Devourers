@@ -18,3 +18,4 @@ C:\Users\dejwc\OneDrive\Desktop\visual-studio\wpf\Devourers\Devourers\obj\Debug\
 C:\Users\dejwc\OneDrive\Desktop\visual-studio\wpf\Devourers\Devourers\obj\Debug\net8.0-windows\Devourers.pdb
 C:\Users\dejwc\OneDrive\Desktop\visual-studio\wpf\Devourers\Devourers\obj\Debug\net8.0-windows\Devourers.genruntimeconfig.cache
 C:\Users\dejwc\OneDrive\Desktop\visual-studio\wpf\Devourers\Devourers\obj\Debug\net8.0-windows\ref\Devourers.dll
+C:\Users\dejwc\OneDrive\Desktop\visual-studio\wpf\Devourers\Devourers\obj\Debug\net8.0-windows\Devourers.sourcelink.json
