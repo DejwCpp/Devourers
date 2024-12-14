@@ -16,16 +16,28 @@ namespace Devourers
         private int _boardSize;
         private Grid _destinationGrid;
 
+        private int[,] _board;
+
         private Brush _playerOneBrush;
         private Brush _playerTwoBrush;
 
-        private Path[] _pawnVectorsP1;
-        private Path[] _pawnVectorsP2;
+        public Path _pawnVectorsP1;
+        public Path _pawnVectorsP2;
+
+        string buttonBackgroundColor = "#454545";
+        string buttonHoverBackgroundColor = "#454545";
+
+        private char actualPawn = 'X';
+        private string actualPawnSize = "big";
+
+        public Button lastActiveButton = new Button();
 
         public GameBoard(int BoardSize, Grid destinationGrid)
         {
             _boardSize = BoardSize;
             _destinationGrid = destinationGrid;
+
+            _board = new int[BoardSize, BoardSize];
         }
 
         public void GenerateBoard()
@@ -59,13 +71,18 @@ namespace Devourers
                 {
                     Button button = new Button
                     {
+                        Tag = row.ToString() + ',' + col.ToString(),
                         Width = btnSize,
                         Height = btnSize,
                         Margin = new System.Windows.Thickness(2),
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
                         Style = SetButtonStyle()
                     };
 
+                    button.Click += GameBoardButton_Clicked;
                     button.MouseEnter += GameBoardButton_MouseEnter;
+                    button.MouseLeave += GameBoardButton_MouseLeave;
 
                     Grid.SetRow(button, row);
                     Grid.SetColumn(button, col);
@@ -94,46 +111,136 @@ namespace Devourers
             _destinationGrid.Children.Add(gameBoardGrid);
         }
 
+        private void DisplayUpdatedBoard()
+        {
+            for (int i = 0; i < _board.GetLength(0); i++)
+            {
+                for (int j = 0; i < _board.GetLength(1); j++)
+                {
+
+                } 
+            }
+        }
+
+        private void UpdateBoardArray(int row, int col)
+        {
+            int value = 0;
+
+            if (actualPawnSize == "big"    && actualPawn == 'X') { value = 1; }
+            if (actualPawnSize == "medium" && actualPawn == 'X') { value = 2; }
+            if (actualPawnSize == "small"  && actualPawn == 'X') { value = 3; }
+            if (actualPawnSize == "big"    && actualPawn == 'O') { value = 4; }
+            if (actualPawnSize == "medium" && actualPawn == 'O') { value = 5; }
+            if (actualPawnSize == "small"  && actualPawn == 'O') { value = 6; }
+
+            _board[row, col] = value;
+        }
+
+        private bool IsBoardFieldEmpty(string tag)
+        {
+            var parts = tag.Split(',');
+            int row = int.Parse(parts[0]);
+            int col = int.Parse(parts[1]);
+
+            return (_board[row, col] == 0) ? true : false;
+        }
+
         public void GameBoardButton_Clicked(object sender, RoutedEventArgs e) 
         {
-            //_destinationGrid.Background = 
+            if (sender is Button button && button.Tag is String tag)
+            {
+                var parts = tag.Split(',');
+                int row = int.Parse(parts[0]);
+                int col = int.Parse(parts[1]);
+
+                UpdateBoardArray(row, col);
+
+                DisplayUpdatedBoard();
+            }
         }
 
         private void GameBoardButton_MouseEnter(object sender, RoutedEventArgs e)
         {
-            PutVectorOnAButton(sender, _pawnVectorsP1[0]);
+            PutVectorOnAButton(sender, _pawnVectorsP1);
+
+            if (sender is Button button && button.Tag is String tag)
+            {
+                if (IsBoardFieldEmpty(tag))
+                {
+                    lastActiveButton = button;
+                }
+            }
         }
 
-        private void PutVectorOnAButton(object sender, Path vector)
+        private void GameBoardButton_MouseLeave(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is String tag)
+            {
+                if (IsBoardFieldEmpty(tag))
+                {
+                    button.Content = null;
+                    lastActiveButton = null;
+                }
+            }
+        }
+
+        public void PutVectorOnAButton(object sender, Path vector)
         {
             if (sender is Button button)
             {
-                if (vector != null)
-                {
-                    // Cloning Path to avoid logic tree conflict
-                    Path clonedPath = new Path
-                    {
-                        Data = vector.Data.Clone(),
-                        Stroke = vector.Stroke,
-                        StrokeThickness = vector.StrokeThickness,
-                        Width = vector.Width,
-                        Height = vector.Height,
-                        HorizontalAlignment = vector.HorizontalAlignment,
-                        VerticalAlignment = vector.VerticalAlignment
-                    };
+                PutVectorOnAButton(button, vector);
+            }
+        }
 
-                    var viewbox = new Viewbox()
-                    {
-                        Child = clonedPath,
-                        Stretch = Stretch.Uniform,
-                    };
+        public void PutVectorOnAButton(Button button, Path vector)
+        {
+            if (button == null) return;
 
-                    button.Content = viewbox;
-                }
-                else
+            if (vector != null)
+            {
+                // Cloning Path to avoid logic tree conflict
+                Path clonedPath = new Path
                 {
-                    button.Content = null;
+                    Data = vector.Data.Clone(),
+                    Stroke = vector.Stroke,
+                    StrokeThickness = vector.StrokeThickness,
+                    Width = vector.Width,
+                    Height = vector.Height,
+                    HorizontalAlignment = vector.HorizontalAlignment,
+                    VerticalAlignment = vector.VerticalAlignment
+                };
+
+                double scaleFactor = 2.8;
+
+                if (actualPawnSize == "big")
+                {
+                    scaleFactor = 2.8;
                 }
+                if (actualPawnSize == "medium")
+                {
+                    scaleFactor = 1.6;
+                }
+                if (actualPawnSize == "small")
+                {
+                    scaleFactor = 1.0;
+                }
+
+                clonedPath.RenderTransform = new ScaleTransform(scaleFactor, scaleFactor);
+                clonedPath.RenderTransformOrigin = new Point(0.5, 0.5);
+
+                var viewbox = new Viewbox()
+                {
+                    Child = clonedPath,
+                    Stretch = Stretch.None,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+
+                button.Content = viewbox;
+            }
+            else
+            {
+                button.Content = null;
             }
         }
 
@@ -141,16 +248,11 @@ namespace Devourers
         {
             switch (boardSize)
             {
-                case 3: { return 150; break; }
-                case 4: { return 110; break; }
-                case 5: { return 90; break; }
+                case 3: return 150;
+                case 4: return 110;
+                case 5: return 90;
             }
             return -1;
-        }
-
-        public int GetBoardSize()
-        {
-            return _boardSize;
         }
 
         private ControlTemplate GetCustomButtonTemplate()
@@ -182,7 +284,8 @@ namespace Devourers
                 Property = Button.IsMouseOverProperty,
                 Value = true
             };
-            hoverTrigger.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush((Color)ColorConverter.ConvertFromString("#353535")), "ButtonBorder"));
+            // Background color on hover
+            hoverTrigger.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush((Color)ColorConverter.ConvertFromString(buttonHoverBackgroundColor)), "ButtonBorder"));
 
             // Add triggers to the template
             template.Triggers.Add(hoverTrigger);
@@ -190,12 +293,17 @@ namespace Devourers
             return template;
         }
 
+        public int GetBoardSize()
+        {
+            return _boardSize;
+        }
+
         private Style SetButtonStyle()
         {
             Style buttonStyle = new Style(typeof(Button));
 
             // Set default properties
-            buttonStyle.Setters.Add(new Setter(Button.BackgroundProperty, new SolidColorBrush((Color)ColorConverter.ConvertFromString("#454545"))));
+            buttonStyle.Setters.Add(new Setter(Button.BackgroundProperty, new SolidColorBrush((Color)ColorConverter.ConvertFromString(buttonBackgroundColor))));
             buttonStyle.Setters.Add(new Setter(Button.BorderBrushProperty, Brushes.Transparent));
             buttonStyle.Setters.Add(new Setter(Button.ForegroundProperty, Brushes.White));
             buttonStyle.Setters.Add(new Setter(Button.BorderThicknessProperty, new Thickness(0)));
@@ -215,14 +323,19 @@ namespace Devourers
             _playerTwoBrush = color;
         }
 
-        public void SetP1Vectors(Path[] vectorArray)
+        public void SetP1Vectors(Path vectorArray)
         {
             _pawnVectorsP1 = vectorArray;
         }
 
-        public void SetP2Vectors(Path[] vectorArray)
+        public void SetP2Vectors(Path vectorArray)
         {
             _pawnVectorsP2 = vectorArray;
+        }
+
+        public void SetActualPawnSize(string newSize)
+        {
+            actualPawnSize = newSize;
         }
     }
 }

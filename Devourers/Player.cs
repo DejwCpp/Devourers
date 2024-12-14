@@ -15,7 +15,7 @@ namespace Devourers
     {
         Grid _destinationGrid;
         private Brush _playerColor;
-        char _pawn;
+        public char _pawn;
 
         private int _boardSize;
 
@@ -23,7 +23,7 @@ namespace Devourers
         private int _mediumPawn;
         private int _smallPawn;
 
-        private Path [] _pawnVectors;
+        private Path _pawnVectors;
 
         public Player(Grid destinationGrid, Brush playerColor, char pawn, int boardSize)
         {
@@ -32,7 +32,7 @@ namespace Devourers
             _pawn = pawn;
             _boardSize = boardSize;
 
-            _pawnVectors = new Path[3];
+            _pawnVectors = new Path();
 
             SetDefaultPawnQuantity();
         }
@@ -98,13 +98,13 @@ namespace Devourers
                     // Center the ellipse inside the section (taking the stroke thickness into account)
                     sectionVector.Data = new EllipseGeometry
                     {
-                        Center = new Point(currentVectorSize / 2, currentVectorSize / 2), // Keep it centered in the available space
-                        RadiusX = adjustedSize / 2,
-                        RadiusY = adjustedSize / 2
+                        Center = new Point((currentVectorSize / 2) - 1.5, (currentVectorSize / 2) - 1.5), // Keep it centered in the available space
+                        RadiusX = (adjustedSize / 2) - 2,
+                        RadiusY = (adjustedSize / 2) - 2
                     };
                 }
 
-                _pawnVectors[i] = sectionVector;
+                _pawnVectors = sectionVector;
 
 
                 // Create a label for the section
@@ -154,7 +154,7 @@ namespace Devourers
             return _playerColor;
         }
 
-        public Path [] Get3VectorsOfPawns()
+        public Path GetVectorOfPawn()
         {
             return _pawnVectors;
         }

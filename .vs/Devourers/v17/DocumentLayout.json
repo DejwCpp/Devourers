@@ -19,10 +19,6 @@
       "RelativeMoniker": "D:0:0:{214D8000-33D9-4EB5-BA66-6AA0B6841257}|Devourers\\Devourers.csproj|solutionrelative:devourers\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{214D8000-33D9-4EB5-BA66-6AA0B6841257}|Devourers\\Devourers.csproj|c:\\users\\dejwc\\onedrive\\desktop\\visual-studio\\wpf\\devourers\\devourers\\gameboardlogic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{214D8000-33D9-4EB5-BA66-6AA0B6841257}|Devourers\\Devourers.csproj|solutionrelative:devourers\\gameboardlogic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{214D8000-33D9-4EB5-BA66-6AA0B6841257}|Devourers\\Devourers.csproj|c:\\users\\dejwc\\onedrive\\desktop\\visual-studio\\wpf\\devourers\\devourers\\menulogicui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{214D8000-33D9-4EB5-BA66-6AA0B6841257}|Devourers\\Devourers.csproj|solutionrelative:devourers\\menulogicui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -48,7 +44,7 @@
               "RelativeDocumentMoniker": "Devourers\\GameBoard.cs",
               "ToolTip": "C:\\Users\\dejwc\\OneDrive\\Desktop\\visual-studio\\wpf\\Devourers\\Devourers\\GameBoard.cs",
               "RelativeToolTip": "Devourers\\GameBoard.cs",
-              "ViewState": "AgIAAFcAAAAAAAAAAAAiwGcAAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAADUAAAAAAAAAAAAAAEcAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-12T18:05:38.569Z",
               "EditorCaption": ""
@@ -61,7 +57,7 @@
               "RelativeDocumentMoniker": "Devourers\\Player.cs",
               "ToolTip": "C:\\Users\\dejwc\\OneDrive\\Desktop\\visual-studio\\wpf\\Devourers\\Devourers\\Player.cs",
               "RelativeToolTip": "Devourers\\Player.cs",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAowGoAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAAAD0AAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-12T19:15:40.411Z",
               "EditorCaption": ""
@@ -74,7 +70,7 @@
               "RelativeDocumentMoniker": "Devourers\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\dejwc\\OneDrive\\Desktop\\visual-studio\\wpf\\Devourers\\Devourers\\MainWindow.xaml.cs",
               "RelativeToolTip": "Devourers\\MainWindow.xaml.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAAADcAAABFAAAAAAAAAA==",
+              "ViewState": "AgIAACUAAAAAAAAAAAAqwBQAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-08T13:30:59.559Z",
               "EditorCaption": ""
@@ -82,19 +78,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "GameBoardLogic.cs",
-              "DocumentMoniker": "C:\\Users\\dejwc\\OneDrive\\Desktop\\visual-studio\\wpf\\Devourers\\Devourers\\GameBoardLogic.cs",
-              "RelativeDocumentMoniker": "Devourers\\GameBoardLogic.cs",
-              "ToolTip": "C:\\Users\\dejwc\\OneDrive\\Desktop\\visual-studio\\wpf\\Devourers\\Devourers\\GameBoardLogic.cs",
-              "RelativeToolTip": "Devourers\\GameBoardLogic.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-13T08:13:29.991Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
               "Title": "MenuLogicUI.cs",
               "DocumentMoniker": "C:\\Users\\dejwc\\OneDrive\\Desktop\\visual-studio\\wpf\\Devourers\\Devourers\\MenuLogicUI.cs",
               "RelativeDocumentMoniker": "Devourers\\MenuLogicUI.cs",
@@ -102,8 +85,7 @@
               "RelativeToolTip": "Devourers\\MenuLogicUI.cs",
               "ViewState": "AgIAAJUAAAAAAAAAAAAuwKgAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-10T07:55:04.347Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-10T07:55:04.347Z"
             },
             {
               "$type": "Document",
@@ -114,8 +96,7 @@
               "ToolTip": "C:\\Users\\dejwc\\OneDrive\\Desktop\\visual-studio\\wpf\\Devourers\\Devourers\\MainWindow.xaml",
               "RelativeToolTip": "Devourers\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-12-08T13:31:06.385Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-08T13:31:06.385Z"
             }
           ]
         }

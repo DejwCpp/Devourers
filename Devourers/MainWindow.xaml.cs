@@ -18,18 +18,15 @@ namespace Devourers
     {
         private MenuLogicUI _menuLogic;
         private GameBoard _gameBoard;
-        private GameBoardLogic _gameBoardLogic;
         private Player _playerOne;
         private Player _playerTwo;
 
         /* TO DO 
          * 
-         * ------- last updated in GameBoard.cs line 104
+         * ------- last updated in GameBoard.cs line 120
          *
-         * - display pawn on button hover
-         * - display label which players round on top
-         * - selecting figure on 1-3 keys clicked
          * - 2 dimentional array with the logic
+         * - display label which players round on top
          *
          */
 
@@ -37,6 +34,29 @@ namespace Devourers
         {
             InitializeComponent();
             InitializeMenuLogicUI();
+
+            this.KeyDown += OnKeyDown;
+        }
+
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.D1:
+                case Key.NumPad1:
+                    _gameBoard.SetActualPawnSize("big");
+                    break;
+                case Key.D2:
+                case Key.NumPad2:
+                    _gameBoard.SetActualPawnSize("medium");
+                    break;
+                case Key.D3:
+                case Key.NumPad3:
+                    _gameBoard.SetActualPawnSize("small");
+                    break;
+            }
+
+            _gameBoard.PutVectorOnAButton(_gameBoard.lastActiveButton, _gameBoard._pawnVectorsP1);
         }
 
         public void GenerateBoardButtonClicked(object sender, RoutedEventArgs e)
@@ -55,8 +75,8 @@ namespace Devourers
                 _gameBoard.SetPlayerOneColor(_playerOne.GetPlayerColor());
                 _gameBoard.SetPlayerTwoColor(_playerTwo.GetPlayerColor());
 
-                _gameBoard.SetP1Vectors(_playerOne.Get3VectorsOfPawns());
-                _gameBoard.SetP2Vectors(_playerTwo.Get3VectorsOfPawns());
+                _gameBoard.SetP1Vectors(_playerOne.GetVectorOfPawn());
+                _gameBoard.SetP2Vectors(_playerTwo.GetVectorOfPawn());
 
                 GameScreen.Background = _playerOne.GetPlayerColor();
             }
