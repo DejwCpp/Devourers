@@ -18,6 +18,10 @@ namespace Devourers
 
         private int[,] _board;
 
+        private Button[,] gridButtons;
+
+        private bool _playerOneMove = true;
+
         private Brush _playerOneBrush;
         private Brush _playerTwoBrush;
 
@@ -38,6 +42,7 @@ namespace Devourers
             _destinationGrid = destinationGrid;
 
             _board = new int[BoardSize, BoardSize];
+            gridButtons = new Button[BoardSize, BoardSize];
         }
 
         public void GenerateBoard()
@@ -69,24 +74,24 @@ namespace Devourers
             {
                 for (int col = 0; col < _boardSize; col++)
                 {
-                    Button button = new Button
+                    gridButtons[row, col] = new Button
                     {
                         Tag = row.ToString() + ',' + col.ToString(),
                         Width = btnSize,
                         Height = btnSize,
-                        Margin = new System.Windows.Thickness(2),
+                        Margin = new Thickness(2),
                         HorizontalAlignment = HorizontalAlignment.Center,
                         VerticalAlignment = VerticalAlignment.Center,
                         Style = SetButtonStyle()
                     };
 
-                    button.Click += GameBoardButton_Clicked;
-                    button.MouseEnter += GameBoardButton_MouseEnter;
-                    button.MouseLeave += GameBoardButton_MouseLeave;
+                    gridButtons[row, col].Click += GameBoardButton_Clicked;
+                    gridButtons[row, col].MouseEnter += GameBoardButton_MouseEnter;
+                    gridButtons[row, col].MouseLeave += GameBoardButton_MouseLeave;
 
-                    Grid.SetRow(button, row);
-                    Grid.SetColumn(button, col);
-                    gameBoardGrid.Children.Add(button);
+                    Grid.SetRow(gridButtons[row, col], row);
+                    Grid.SetColumn(gridButtons[row, col], col);
+                    gameBoardGrid.Children.Add(gridButtons[row, col]);
                 }
             }
 
@@ -115,9 +120,34 @@ namespace Devourers
         {
             for (int i = 0; i < _board.GetLength(0); i++)
             {
-                for (int j = 0; i < _board.GetLength(1); j++)
+                for (int j = 0; j < _board.GetLength(1); j++)
                 {
+                    if (_board[i, j] == 0) continue;
 
+                    // Clone the Path to avoid reuse errors
+                    Path clonedPath = new Path
+                    {
+                        Data = _pawnVectorsP1.Data.Clone(),
+                        Stroke = _pawnVectorsP1.Stroke,
+                        StrokeThickness = _pawnVectorsP1.StrokeThickness,
+                        Width = _pawnVectorsP1.Width,
+                        Height = _pawnVectorsP1.Height,
+                        HorizontalAlignment = _pawnVectorsP1.HorizontalAlignment,
+                        VerticalAlignment = _pawnVectorsP1.VerticalAlignment
+                    };
+
+                    var viewbox = new Viewbox()
+                    {
+                        Child = clonedPath,
+                        Stretch = Stretch.None,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center
+                    };
+
+                    gridButtons[i, j].Content = viewbox;
+
+                    if (_playerOneMove == true) _playerOneMove = false;
+                    else _playerOneMove = true;
                 } 
             }
         }
@@ -156,6 +186,8 @@ namespace Devourers
                 UpdateBoardArray(row, col);
 
                 DisplayUpdatedBoard();
+
+                ChangeBackgroundColor();
             }
         }
 
@@ -194,54 +226,54 @@ namespace Devourers
 
         public void PutVectorOnAButton(Button button, Path vector)
         {
-            if (button == null) return;
+            if (button == null) return; 
+            
+            if (!IsBoardFieldEmpty(button.Tag.ToString())) return;
 
-            if (vector != null)
+            // Cloning Path to avoid logic tree conflict
+            Path clonedPath = new Path
             {
-                // Cloning Path to avoid logic tree conflict
-                Path clonedPath = new Path
-                {
-                    Data = vector.Data.Clone(),
-                    Stroke = vector.Stroke,
-                    StrokeThickness = vector.StrokeThickness,
-                    Width = vector.Width,
-                    Height = vector.Height,
-                    HorizontalAlignment = vector.HorizontalAlignment,
-                    VerticalAlignment = vector.VerticalAlignment
-                };
+                Data = vector.Data.Clone(),
+                Stroke = vector.Stroke,
+                StrokeThickness = vector.StrokeThickness,
+                Width = vector.Width,
+                Height = vector.Height,
+                HorizontalAlignment = vector.HorizontalAlignment,
+                VerticalAlignment = vector.VerticalAlignment
+            };
 
-                double scaleFactor = 2.8;
+            double scaleFactor = 2.8;
 
-                if (actualPawnSize == "big")
-                {
-                    scaleFactor = 2.8;
-                }
-                if (actualPawnSize == "medium")
-                {
-                    scaleFactor = 1.6;
-                }
-                if (actualPawnSize == "small")
-                {
-                    scaleFactor = 1.0;
-                }
-
-                clonedPath.RenderTransform = new ScaleTransform(scaleFactor, scaleFactor);
-                clonedPath.RenderTransformOrigin = new Point(0.5, 0.5);
-
-                var viewbox = new Viewbox()
-                {
-                    Child = clonedPath,
-                    Stretch = Stretch.None,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center
-                };
-
-                button.Content = viewbox;
-            }
-            else
+            if (actualPawnSize == "big")
             {
-                button.Content = null;
+                scaleFactor = 2.8;
             }
+            if (actualPawnSize == "medium")
+            {
+                scaleFactor = 1.6;
+            }
+            if (actualPawnSize == "small")
+            {
+                scaleFactor = 1.0;
+            }
+
+            clonedPath.RenderTransform = new ScaleTransform(scaleFactor, scaleFactor);
+            clonedPath.RenderTransformOrigin = new Point(0.5, 0.5);
+
+            var viewbox = new Viewbox()
+            {
+                Child = clonedPath,
+                Stretch = Stretch.None,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            button.Content = viewbox;
+        }
+
+        private void ChangeBackgroundColor()
+        {
+            _destinationGrid.Background = (_playerOneMove == true) ? _playerOneBrush : _playerTwoBrush;
         }
 
         private int CalculateButtonSize(int boardSize)
